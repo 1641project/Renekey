@@ -11,7 +11,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 			<div class="_gaps_m znqjceqz">
 				<div v-panel class="about">
 					<div ref="containerEl" class="container" :class="{ playing: easterEggEngine != null }">
-						<img src="/client-assets/about-icon.png" alt="" class="icon" draggable="false" @load="iconLoaded" @click="gravity"/>
+						<img src="/client-assets/renekey.png" alt="" class="icon" draggable="false" @load="iconLoaded" @click="gravity"/>
 						<div class="misskey">Re:nekey</div>
 						<div class="version">v{{ version }}</div>
 						<span v-for="emoji in easterEggEmojis" :key="emoji.id" class="emoji" :data-physics-x="emoji.left" :data-physics-y="emoji.top" :class="{ _physics_circle_: !emoji.emoji.startsWith(':') }">
@@ -39,6 +39,15 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<FormSection>
 					<template #label>{{ i18n.ts._aboutMisskey.contributors }}</template>
 					<div :class="$style.contributors">
+						<a href="https://github.com/164-life" target="_blank" :class="$style.contributor">
+							<img src="https://avatars.githubusercontent.com/u/146170742?v=4" :class="$style.contributorAvatar">
+							<span :class="$style.contributorUsername">@164-life</span>
+						</a>
+					</div>
+				</FormSection>
+				<FormSection>
+					<template #label>Sharkey Contributors</template>
+					<div :class="$style.contributors">
 						<a href="https://github.com/Mar0xy" target="_blank" :class="$style.contributor">
 							<img src="https://avatars.githubusercontent.com/u/8841466?v=4" :class="$style.contributorAvatar">
 							<span :class="$style.contributorUsername">@Mar0xy</span>
@@ -48,7 +57,6 @@ SPDX-License-Identifier: AGPL-3.0-only
 							<span :class="$style.contributorUsername">@Insert5StarName</span>
 						</a>
 					</div>
-					<template #caption><MkLink url="https://github.com/transfem-org/sharkey/graphs/contributors">{{ i18n.ts._aboutMisskey.allContributors }}</MkLink></template>
 				</FormSection>
 				<FormSection>
 					<template #label>Misskey Contributors</template>
