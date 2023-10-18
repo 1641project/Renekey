@@ -95,7 +95,7 @@ export function openInstanceMenu(ev: MouseEvent) {
 	}, {
 		type: 'link',
 		text: i18n.ts.aboutMisskey,
-		to: '/about-sharkey',
+		to: '/about-renekey',
 	}], ev.currentTarget ?? ev.target, {
 		align: 'left',
 	});

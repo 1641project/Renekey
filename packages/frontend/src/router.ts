@@ -192,8 +192,8 @@ export const routes = [{
 	component: page(() => import('./pages/about.vue')),
 	hash: 'initialTab',
 }, {
-	path: '/about-sharkey',
-	component: page(() => import('./pages/about-sharkey.vue')),
+	path: '/about-renekey',
+	component: page(() => import('./pages/about-renekey.vue')),
 }, {
 	path: '/invite',
 	name: 'invite',
