@@ -25,6 +25,10 @@ SPDX-License-Identifier: AGPL-3.0-only
 					<template #key>{{ i18n.ts.administrator }}</template>
 					<template #value>{{ instance.maintainerName || `(${i18n.ts.unknown})` }} ({{ instance.maintainerEmail || `(${i18n.ts.unknown})` }})</template>
 				</MkKeyValue>
+				<MkKeyValue oneline v-if="instance && shouldDisplayCompanySection">
+					<template #key>運営会社/グループ</template>
+					<template #value>{{ companyName }}</template>
+				</MkKeyValue>
 			</div>
 			<MkKeyValue>
 				<template #key>{{ i18n.ts.description }}</template>
@@ -231,6 +235,23 @@ definePageMetadata({
 	title: props.host,
 	icon: 'ph-hard-drives ph-bold ph-lg',
 });
+
+// 運営会社セクションの表示条件を定義
+let shouldDisplayCompanySection = false;
+
+// 運営会社名を空の文字列で初期化
+let companyName = '';
+
+// hostに応じて運営会社名を設定
+if (instance) {
+  if (instance.host === 'misskey.io') {
+    companyName = 'MisskeyHQ Inc.';
+  } else if (instance.host === 'renedon.red') {
+    companyName = '1641project.org';
+  }
+  // 上記の2つの条件を満たす場合にセクションを表示
+  shouldDisplayCompanySection = companyName !== '';
+}
 </script>
 
 <style lang="scss" scoped>
