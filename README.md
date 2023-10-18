@@ -1,37 +1,64 @@
-<div align="center">
-<a href="https://joinsharkey.org/">
-	<img src="https://raw.githubusercontent.com/transfem-org/Sharkey/5180b4093f30e3bf3ff8d6b16751b69ebed9fb12/packages/frontend/assets/sharkey.svg" alt="Sharkey logo" style="border-radius:50%" width="400"/>
+<div  align="center">
+
+<img src="" style="border-radius:50%" width="400"/>
+
 </a>
 
-**🌎 **[Sharkey](https://joinsharkey.org/)** is an open source, decentralized social media platform that's free forever! 🚀**
+  
+
+**🌎 **[Re:nekey]()** はオープンソースの分散型ソーシャルメディア・プラットフォームで、永久無料です！🚀**
 
 ---
-
+#### Sharkeyをベースにしており、更に使いやすくカスタマイズされています。
+#### 主に日本向けにカスタマイズされています。
+  
+---
 </div>
+
+  
 
 <div>
 
-<a href="https://joinsharkey.org/"><img src="https://cdn.transfem.social/files/b2721164-e015-463e-b851-3e953dd0d9f9.webp" align="right" height="520px"/></a>
+  
 
-## ✨ Features
-- **ActivityPub support**\
-Not on Sharkey? No problem! Not only can Sharkey instances talk to each other, but you can make friends with people on other networks like Mastodon and Pixelfed!
-- **Reactions**\
-You can add emoji reactions to any post! No longer are you bound by a like button, show everyone exactly how you feel with the tap of a button.
-- **Post Editing**\
-In Sharkey you can edit your post, this is not possible in normal Misskey
-- **Mastodon API**\
-Sharkey implements the Mastodon API unlike normal Misskey
-- **UI/UX Improvements**\
-Sharkey makes some UI/UX improvements to make it easier to navigate
-- **Drive**\
-With Sharkey's built in drive, you get cloud storage right in your social media, where you can upload any files, make folders, and find media from posts you've made!
-- **Rich Web UI**\
-	Sharkey has a rich and easy to use Web UI!
-	It is highly customizable, from changing the layout and adding widgets to making custom themes.
-	Furthermore, plugins can be created using AiScript, an original programming language.
-- And much more...
+## ✨ 特徴
+
+- **ActivityPub サポート**
+
+Re:nekeyをお使いではないですか？大丈夫です！Re:nekeyや Misskeyのインスタンス同士で会話できるだけでなく、Mastodonや Re:nedon やPixelfedなどの他のネットワークの人とも友達になれます！
+
+- リアクション
+
+どんな投稿にも絵文字でリアクションをつけることができます！いいね！」ボタンに縛られることなく、ボタンをタップするだけで、自分の気持ちをみんなに伝えることができます。
+
+- 投稿編集
+
+Re:nekeyでは、投稿を編集することができます。
+
+- マストドンAPI
+
+通常のMisskeyとは異なり、Re:nekeyはMastodon APIを実装しています。
+
+- UI/UXの改善
+
+Re:nekeyはUI/UXをいくつか改善し、ナビゲートしやすくした
+
+- ドライブ
+
+Re:nekeyの内蔵ドライブで、ソーシャルメディアにクラウドストレージができ、ファイルをアップロードしたり、フォルダを作ったり、投稿したメディアを探したりできる！
+
+- リッチなウェブUI
+
+Re:nekeyはリッチで使いやすいウェブUIを持っています！
+レイアウトの変更やウィジェットの追加、カスタムテーマの作成など、カスタマイズ性も抜群です。
+さらに、独自のプログラミング言語「AiScript」によるプラグイン作成も可能です。
+
+- その他にも...色々搭載されています！！
+
+  
 
 </div>
 
-<div style="clear: both;"></div>
+  
+
+<div  style="clear: both;"></div>
