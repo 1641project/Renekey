@@ -1,6 +1,6 @@
 <div  align="center">
 
-<img src="" style="border-radius:50%" width="400"/>
+<img src="/packages/frontend/assets/renekey.png" style="border-radius:50%" width="400"/>
 
 </a>
 
