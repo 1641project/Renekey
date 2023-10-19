@@ -11,7 +11,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 			<div class="_gaps_m znqjceqz">
 				<div v-panel class="about">
 					<div ref="containerEl" class="container" :class="{ playing: easterEggEngine != null }">
-						<img src="/client-assets/renekey.png" alt="" class="icon" draggable="false" @load="iconLoaded" @click="gravity"/>
+						<img src="/client-assets/about-icon.png" alt="" class="icon" draggable="false" @load="iconLoaded" @click="gravity"/>
 						<div class="misskey">Re:nekey</div>
 						<div class="version">v{{ version }}</div>
 						<span v-for="emoji in easterEggEmojis" :key="emoji.id" class="emoji" :data-physics-x="emoji.left" :data-physics-y="emoji.top" :class="{ _physics_circle_: !emoji.emoji.startsWith(':') }">
@@ -25,7 +25,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 					{{ i18n.ts._aboutMisskey.about }}<br><a href="https://1641project.org" target="_blank" class="_link">{{ i18n.ts.learnMore }}</a>
 				</div>
 				<div v-if="$i != null" style="text-align: center;">
-					<MkButton primary rounded inline @click="iLoveMisskey">I <Mfm text="$[jelly ❤]"/> #Sharkey</MkButton>
+					<MkButton primary rounded inline @click="iLoveMisskey">I <Mfm text="$[jelly ❤]"/> #Re:nekey</MkButton>
 				</div>
 				<FormSection>
 					<div class="_formLinks">
@@ -85,21 +85,6 @@ SPDX-License-Identifier: AGPL-3.0-only
 							<img src="https://avatars.githubusercontent.com/u/8159402?v=4" :class="$style.contributorAvatar">
 							<span :class="$style.contributorUsername">@robflop</span>
 						</a>
-					</div>
-				</FormSection>
-				<FormSection>
-					<template #label>Our lovely GitHub Sponsors</template>
-					<div :class="$style.contributors">
-						<span
-							v-for="sponsor in sponsors[0]"
-							:key="sponsor"
-							style="margin-bottom: 0.5rem;"
-						>
-							<a :href="sponsor.profile" target="_blank" :class="$style.contributor">
-								<img :src="sponsor.avatar" :class="$style.contributorAvatar">
-								<span :class="$style.contributorUsername">{{ sponsor.details.name }}</span>
-							</a>
-						</span>
 					</div>
 				</FormSection>
 			</div>
