@@ -76,12 +76,14 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<MkA v-if="appearNote.replyId" :class="$style.noteReplyTarget" :to="`/notes/${appearNote.replyId}`"><i class="ph-arrow-bend-left-up ph-bold pg-lg"></i></MkA>
 				<Mfm v-if="appearNote.text" :text="appearNote.text" :author="appearNote.user" :i="$i" :emojiUrls="appearNote.emojis"/>
 				<a v-if="appearNote.renote != null" :class="$style.rn">RN:</a>
-				<div v-if="translating || translation" :class="$style.translation">
+				<div v-if="defaultStore.state.showTranslateButtonInNote" style="padding-top: 5px; color: var(--accent);">
+					<button v-if="!(translating || translation)" ref="translateButton" class="_button" @mousedown="translate()">{{ i18n.ts.translateNote }}</button>
+					<button v-else class="_button" @mousedown="translation = null">{{ i18n.ts.closeTranslate }}</button>
+				</div>
 					<MkLoading v-if="translating" mini/>
 					<div v-else>
 						<b>{{ i18n.t('translatedFrom', { x: translation.sourceLang }) }}: </b>
 						<Mfm :text="translation.text" :author="appearNote.user" :i="$i" :emojiUrls="appearNote.emojis"/>
-					</div>
 				</div>
 				<div v-if="appearNote.files.length > 0">
 					<MkMediaList :mediaList="appearNote.files"/>
@@ -243,6 +245,7 @@ import MkUserCardMini from '@/components/MkUserCardMini.vue';
 import MkPagination, { Paging } from '@/components/MkPagination.vue';
 import MkReactionIcon from '@/components/MkReactionIcon.vue';
 import MkButton from '@/components/MkButton.vue';
+import { miLocalStorage } from '@/local-storage';
 
 const props = defineProps<{
 	note: Misskey.entities.Note;
@@ -610,6 +613,17 @@ function menu(viaKeyboard = false): void {
 	os.popupMenu(menu, menuButton.value, {
 		viaKeyboard,
 	}).then(focus).finally(cleanup);
+}
+
+async function translate(): Promise<void> {
+	if (translation.value != null) return;
+	translating.value = true;
+	const res = await os.api('notes/translate', {
+		noteId: appearNote.id,
+		targetLang: miLocalStorage.getItem('lang') ?? navigator.language,
+	});
+	translating.value = false;
+	translation.value = res;
 }
 
 async function clip() {

@@ -1,5 +1,8 @@
 _lang_: "日本語"
 
+closeTranslate: "翻訳を閉じる"
+translateNote: "ノートを翻訳する"
+showTranslateButtonInNote: "ノート本文に翻訳ボタンを表示"
 headlineMisskey: "ノートでつながるネットワーク"
 introMisskey: "ようこそ！Re:nekeyは、オープンソースの分散型マイクロブログサービスです。\n「ノート」を作成して、いま起こっていることを共有したり、あなたについて皆に発信しよう📡\n「リアクション」機能で、皆のノートに素早く反応を追加することもできます👍\n新しい世界を探検しよう🚀"
 poweredByMisskeyDescription: "{name}は、オープンソースのプラットフォーム<b>Re:nekey</b>のサーバーのひとつです。"

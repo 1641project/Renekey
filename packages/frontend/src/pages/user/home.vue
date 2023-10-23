@@ -77,6 +77,17 @@ SPDX-License-Identifier: AGPL-3.0-only
 						<MkOmit>
 							<Mfm v-if="user.description" :text="user.description" :isNote="false" :author="user" :i="$i"/>
 							<p v-else class="empty">{{ i18n.ts.noAccountDescription }}</p>
+							<div v-if="user.description">
+								<MkButton v-if="!(translating || translation)" class="translateButton" small @click="translate"><i class="ti ti-language-hiragana"></i> {{ i18n.ts.translateProfile }}</MkButton>
+								<MkButton v-else class="translateButton" small @click="translation = null">{{ i18n.ts.closeTranslate }}</MkButton>
+							</div>
+							<div v-if="translating || translation" class="translation">
+								<MkLoading v-if="translating" mini/>
+								<div v-else>
+									<b>{{ i18n.t('translatedFrom', { x: translation.sourceLang }) }}:</b><hr style="margin: 10px 0;">
+									<Mfm :text="translation.text" :isNote="false" :author="user" :i="$i"/>
+								</div>
+							</div>
 						</MkOmit>
 					</div>
 					<div class="fields system">

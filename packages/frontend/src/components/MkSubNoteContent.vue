@@ -11,6 +11,17 @@ SPDX-License-Identifier: AGPL-3.0-only
 		<MkA v-if="note.replyId" :class="$style.reply" :to="`/notes/${note.replyId}`" v-on:click.stop><i class="ph-arrow-bend-left-up ph-bold pg-lg"></i></MkA>
 		<Mfm v-if="note.text" :text="note.text" :author="note.user" :i="$i" :emojiUrls="note.emojis"/>
 		<MkA v-if="note.renoteId" :class="$style.rp" :to="`/notes/${note.renoteId}`" v-on:click.stop>RN: ...</MkA>
+		<div v-if="defaultStore.state.showTranslateButtonInNote" style="padding-top: 5px; color: var(--accent);">
+			<button v-if="!(translating || translation)" ref="translateButton" class="_button" @mousedown="translate()">{{ i18n.ts.translateNote }}</button>
+			<button v-else class="_button" @mousedown="translation = null">{{ i18n.ts.closeTranslate }}</button>
+		</div>
+		<div v-if="translating || translation" :class="$style.translation">
+			<MkLoading v-if="translating" mini/>
+			<div v-else>
+				<b>{{ i18n.t('translatedFrom', { x: translation.sourceLang }) }}:</b><hr style="margin: 10px 0;">
+				<Mfm :text="translation.text" :author="note.user" :i="$i" :emojiUrls="note.emojis"/>
+			</div>
+		</div>
 	</div>
 	<details v-if="note.files.length > 0" :open="!defaultStore.state.collapseFiles">
 		<summary>({{ i18n.t('withNFiles', { n: note.files.length }) }})</summary>
