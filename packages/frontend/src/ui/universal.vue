@@ -240,6 +240,7 @@ body {
 	position: fixed;
 	top: 0;
 	left: 0;
+	overscroll-behavior: none;
 }
 
 #misskey_app {
@@ -318,7 +319,7 @@ $widgets-hide-threshold: 1090px;
 	min-width: 0;
 	overflow: auto;
 	overflow-y: scroll;
-	overscroll-behavior: contain;
+	overscroll-behavior: none;
 	background: var(--bg);
 }
 

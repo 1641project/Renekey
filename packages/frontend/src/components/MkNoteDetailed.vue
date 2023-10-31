@@ -58,7 +58,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 							<i v-else-if="appearNote.visibility === 'followers'" class="ph-lock ph-bold ph-lg"></i>
 							<i v-else-if="appearNote.visibility === 'specified'" ref="specified" class="ph-envelope ph-bold ph-lg"></i>
 						</span>
-						<span v-if="appearNote.updatedAt" style="margin-left: 0.5em;" title="Edited"><i class="ph-pencil ph-bold ph-lg"></i></span>
+						<span v-if="appearNote.updatedAt" ref="menuVersionsButton" style="margin-left: 0.5em;" title="Edited" @mousedown="menuVersions()"><i class="ph-pencil ph-bold ph-lg"></i></span>
 						<span v-if="appearNote.localOnly" style="margin-left: 0.5em;" :title="i18n.ts._visibility['disableFederation']"><i class="ph-rocket ph-bold pg-lg"></i></span>
 					</div>
 				</div>
@@ -68,19 +68,19 @@ SPDX-License-Identifier: AGPL-3.0-only
 		</header>
 		<div :class="$style.noteContent">
 			<p v-if="appearNote.cw != null" :class="$style.cw">
-				<Mfm v-if="appearNote.cw != ''" style="margin-right: 8px;" :text="appearNote.cw" :author="appearNote.user" :i="$i"/>
+				<Mfm v-if="appearNote.cw != ''" style="margin-right: 8px;" :text="appearNote.cw" :author="appearNote.user" :nyaize="'account'" :i="$i"/>
 				<MkCwButton v-model="showContent" :note="appearNote"/>
 			</p>
 			<div v-show="appearNote.cw == null || showContent">
 				<span v-if="appearNote.isHidden" style="opacity: 0.5">({{ i18n.ts.private }})</span>
 				<MkA v-if="appearNote.replyId" :class="$style.noteReplyTarget" :to="`/notes/${appearNote.replyId}`"><i class="ph-arrow-bend-left-up ph-bold pg-lg"></i></MkA>
-				<Mfm v-if="appearNote.text" :text="appearNote.text" :author="appearNote.user" :i="$i" :emojiUrls="appearNote.emojis"/>
+				<Mfm v-if="appearNote.text" :text="appearNote.text" :author="appearNote.user" :nyaize="'account'" :i="$i" :emojiUrls="appearNote.emojis"/>
 				<a v-if="appearNote.renote != null" :class="$style.rn">RN:</a>
 				<div v-if="translating || translation" :class="$style.translation">
 					<MkLoading v-if="translating" mini/>
 					<div v-else>
 						<b>{{ i18n.t('translatedFrom', { x: translation.sourceLang }) }}: </b>
-						<Mfm :text="translation.text" :author="appearNote.user" :i="$i" :emojiUrls="appearNote.emojis"/>
+						<Mfm :text="translation.text" :author="appearNote.user" :nyaize="'account'" :i="$i" :emojiUrls="appearNote.emojis"/>
 					</div>
 				</div>
 				<div v-if="appearNote.files.length > 0">
@@ -98,7 +98,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 					{{ i18n.ts.edited }}: <MkTime :time="appearNote.updatedAt" mode="detail"/>
 				</div>
 				<MkA :to="notePage(appearNote)">
-					<MkTime :time="appearNote.createdAt" mode="detail"/>
+					<MkTime :time="appearNote.createdAt" mode="detail" colored/>
 				</MkA>
 			</div>
 			<MkReactionsViewer ref="reactionsViewer" :note="appearNote"/>
@@ -232,6 +232,7 @@ import { extractUrlFromMfm } from '@/scripts/extract-url-from-mfm.js';
 import { $i } from '@/account.js';
 import { i18n } from '@/i18n.js';
 import { getNoteClipMenu, getNoteMenu } from '@/scripts/get-note-menu.js';
+import { getNoteVersionsMenu } from '@/scripts/get-note-versions-menu.js';
 import { useNoteCapture } from '@/scripts/use-note-capture.js';
 import { deepClone } from '@/scripts/clone.js';
 import { useTooltip } from '@/scripts/use-tooltip.js';
@@ -256,9 +257,11 @@ let note = $ref(deepClone(props.note));
 // plugin
 if (noteViewInterruptors.length > 0) {
 	onMounted(async () => {
-		let result = deepClone(note);
+		let result:Misskey.entities.Note | null = deepClone(note);
 		for (const interruptor of noteViewInterruptors) {
 			result = await interruptor.handler(result);
+
+			if (result === null) return isDeleted.value = true;
 		}
 		note = result;
 	});
@@ -273,6 +276,7 @@ const isRenote = (
 
 const el = shallowRef<HTMLElement>();
 const menuButton = shallowRef<HTMLElement>();
+const menuVersionsButton = shallowRef<HTMLElement>();
 const renoteButton = shallowRef<HTMLElement>();
 const renoteTime = shallowRef<HTMLElement>();
 const reactButton = shallowRef<HTMLElement>();
@@ -353,6 +357,7 @@ const reactionsPagination = $computed(() => ({
 useNoteCapture({
 	rootEl: el,
 	note: $$(appearNote),
+	pureNote: $$(note),
 	isDeletedRef: isDeleted,
 });
 
@@ -612,6 +617,13 @@ function menu(viaKeyboard = false): void {
 	}).then(focus).finally(cleanup);
 }
 
+async function menuVersions(viaKeyboard = false): Promise<void> {
+	const { menu, cleanup } = await getNoteVersionsMenu({ note: note, menuVersionsButton });
+	os.popupMenu(menu, menuVersionsButton.value, {
+		viaKeyboard,
+	}).then(focus).finally(cleanup);
+}
+
 async function clip() {
 	os.popupMenu(await getNoteClipMenu({ note: note, isDeleted }), clipButton.value).then(focus);
 }
@@ -643,6 +655,7 @@ function blur() {
 }
 
 const repliesLoaded = ref(false);
+
 function loadReplies() {
 	repliesLoaded.value = true;
 	os.api('notes/children', {
@@ -653,9 +666,11 @@ function loadReplies() {
 		replies.value = res;
 	});
 }
+
 loadReplies();
 
 const quotesLoaded = ref(false);
+
 function loadQuotes() {
 	quotesLoaded.value = true;
 	os.api('notes/renotes', {
@@ -666,9 +681,11 @@ function loadQuotes() {
 		quotes.value = res;
 	});
 }
+
 loadQuotes();
 
 const conversationLoaded = ref(false);
+
 function loadConversation() {
 	conversationLoaded.value = true;
 	os.api('notes/conversation', {
@@ -677,6 +694,7 @@ function loadConversation() {
 		conversation.value = res.reverse();
 	});
 }
+
 if (appearNote.reply && appearNote.reply.replyId && defaultStore.state.autoloadConversation) loadConversation();
 </script>
 
@@ -751,6 +769,7 @@ if (appearNote.reply && appearNote.reply.replyId && defaultStore.state.autoloadC
 .note {
 	padding: 32px;
 	font-size: 1.2em;
+	overflow: hidden;
 
 	&:hover > .main > .footer > .button {
 		opacity: 1;
@@ -762,6 +781,7 @@ if (appearNote.reply && appearNote.reply.replyId && defaultStore.state.autoloadC
 	position: relative;
 	margin-bottom: 16px;
 	align-items: center;
+	z-index: 2;
 }
 
 .noteHeaderAvatar {
@@ -808,6 +828,7 @@ if (appearNote.reply && appearNote.reply.replyId && defaultStore.state.autoloadC
 .noteContent {
 	container-type: inline-size;
 	overflow-wrap: break-word;
+	z-index: 1;
 }
 
 .cw {

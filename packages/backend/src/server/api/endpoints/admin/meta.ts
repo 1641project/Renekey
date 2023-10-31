@@ -114,11 +114,11 @@ export const meta = {
 				optional: false, nullable: true,
 			},
 			silencedHosts: {
-				type: "array",
+				type: 'array',
 				optional: true,
 				nullable: false,
 				items: {
-					type: "string",
+					type: 'string',
 					optional: false,
 					nullable: false,
 				},
@@ -307,6 +307,10 @@ export const meta = {
 				type: 'object',
 				optional: false, nullable: false,
 			},
+			enableFanoutTimeline: {
+				type: 'boolean',
+				optional: false, nullable: false,
+			},
 			perLocalUserUserTimelineCacheMax: {
 				type: 'number',
 				optional: false, nullable: false,
@@ -440,6 +444,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				enableIdenticonGeneration: instance.enableIdenticonGeneration,
 				policies: { ...DEFAULT_POLICIES, ...instance.policies },
 				manifestJsonOverride: instance.manifestJsonOverride,
+				enableFanoutTimeline: instance.enableFanoutTimeline,
 				perLocalUserUserTimelineCacheMax: instance.perLocalUserUserTimelineCacheMax,
 				perRemoteUserUserTimelineCacheMax: instance.perRemoteUserUserTimelineCacheMax,
 				perUserHomeTimelineCacheMax: instance.perUserHomeTimelineCacheMax,

@@ -16,7 +16,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<MkInfo v-if="noMaintainerInformation" warn class="info">{{ i18n.ts.noMaintainerInformationWarning }} <MkA to="/admin/settings" class="_link">{{ i18n.ts.configure }}</MkA></MkInfo>
 				<MkInfo v-if="noBotProtection" warn class="info">{{ i18n.ts.noBotProtectionWarning }} <MkA to="/admin/security" class="_link">{{ i18n.ts.configure }}</MkA></MkInfo>
 				<MkInfo v-if="noEmailServer" warn class="info">{{ i18n.ts.noEmailServerWarning }} <MkA to="/admin/email-settings" class="_link">{{ i18n.ts.configure }}</MkA></MkInfo>
-				<MkInfo v-if="pendingUserApprovals" warn class="info">{{ i18n.ts.pendingUserApprovals }} <MkA to="/admin/users" class="_link">{{ i18n.ts.check }}</MkA></MkInfo>
+				<MkInfo v-if="pendingUserApprovals" warn class="info">{{ i18n.ts.pendingUserApprovals }} <MkA to="/admin/approvals" class="_link">{{ i18n.ts.check }}</MkA></MkInfo>
 
 				<MkSuperMenu :def="menuDef" :grid="narrow"></MkSuperMenu>
 			</div>
@@ -115,6 +115,11 @@ const menuDef = $computed(() => [{
 		to: '/admin/invites',
 		active: currentPage?.route.name === 'invites',
 	}, {
+		icon: 'ph-chalkboard-teacher ph-bold ph-lg',
+		text: i18n.ts.approvals,
+		to: '/admin/approvals',
+		active: currentPage?.route.name === 'approvals',
+	}, {
 		icon: 'ph-seal-check ph-bold pg-lg',
 		text: i18n.ts.roles,
 		to: '/admin/roles',
@@ -124,6 +129,11 @@ const menuDef = $computed(() => [{
 		text: i18n.ts.customEmojis,
 		to: '/admin/emojis',
 		active: currentPage?.route.name === 'emojis',
+	}, {
+		icon: 'ph-sparkle ph-bold ph-lg',
+		text: i18n.ts.avatarDecorations,
+		to: '/avatar-decorations',
+		active: currentPage?.route.name === 'avatarDecorations',
 	}, {
 		icon: 'ph-globe-hemisphere-west ph-bold ph-lg',
 		text: i18n.ts.federation,

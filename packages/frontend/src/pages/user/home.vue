@@ -139,7 +139,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 					<template #header>
 						<MkTab v-model="noteview" :class="$style.tab">
 							<option :value="null">{{ i18n.ts.notes }}</option>
-							<option value="replies">{{ i18n.ts.all }}</option>
+							<option value="all">{{ i18n.ts.all }}</option>
 							<option value="files">{{ i18n.ts.withFiles }}</option>
 						</MkTab>
 					</template>
@@ -367,7 +367,7 @@ onUnmounted(() => {
 	background-size: cover;
 	background-position: center;
 	pointer-events: none;
-	filter: blur(8px) opacity(0.6);
+	filter: var(--blur, blur(10px)) opacity(0.6);
 	// Funny CSS schenanigans to make background escape container
 	left: -100%;
 	top: -5%;
@@ -391,7 +391,6 @@ onUnmounted(() => {
 				position: relative;
 				overflow: clip;
 				background: color-mix(in srgb, var(--panel) 65%, transparent);
-				backdrop-filter: blur(16px);
 
 				> .banner-container {
 					position: relative;
@@ -755,7 +754,7 @@ onUnmounted(() => {
 	margin: calc(var(--margin) / 2) 0;
 	padding: calc(var(--margin) / 2) 0;
 	background: color-mix(in srgb, var(--bg) 65%, transparent);
-	backdrop-filter: blur(16px);
+	backdrop-filter: var(--blur, blur(15px));
 	border-radius: 5px;
 	> button {
 		border-radius: 5px;

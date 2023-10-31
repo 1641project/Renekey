@@ -510,6 +510,11 @@ export class MiMeta {
 	})
 	public preservedUsernames: string[];
 
+	@Column('boolean', {
+		default: true,
+	})
+	public enableFanoutTimeline: boolean;
+
 	@Column('integer', {
 		default: 300,
 	})
