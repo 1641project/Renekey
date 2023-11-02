@@ -471,6 +471,10 @@ export type Endpoints = {
         req: TODO;
         res: TODO;
     };
+		'admin/emoji/adds': {
+        req: TODO;
+        res: TODO;
+    };
     'admin/emoji/copy': {
         req: TODO;
         res: TODO;
